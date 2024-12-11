@@ -1,0 +1,12 @@
+# Gradle wrapper files should use LF
+gradlew text eol=lf
+*.sh text eol=lf
+*.bat text eol=crlf
+
+# Java sources
+*.java text eol=lf
+*.gradle text eol=lf
+*.properties text eol=lf
+
+# Documentation
+*.md text eol=lf 
