@@ -79,9 +79,11 @@ Client <----Data-----> Server
    - 서버 부하 감소
    - 네트워크 트래픽 감소
 
-## WebSocket 프로토콜 종류
+## WebSocket 관련 기술
 
-### 1. STOMP (Simple Text Oriented Messaging Protocol)
+### WebSocket 기반 프로토콜
+
+#### 1. STOMP (Simple Text Oriented Messaging Protocol)
 - **특징**: HTTP와 유사한 프레임 기반 프로토콜
 - **장점**: 
   - 메시지 형식이 정형화되어 있음
@@ -89,15 +91,25 @@ Client <----Data-----> Server
   - Spring에서 기본 지원
 - **사용 사례**: 채팅, 메시징 시스템
 
-### 2. MQTT (Message Queuing Telemetry Transport)
-- **특징**: 경량화된 pub/sub 메시징 프로토콜
+#### 2. MQTT (Message Queuing Telemetry Transport)
+- **특징**: IoT에 특화된 경량 메시징 프로토콜
 - **장점**:
-  - 낮은 대역폭 환경에 최적화
+  - TCP/IP 기반으로 동작 (WebSocket은 전송 옵션 중 하나)
   - QoS(Quality of Service) 레벨 지원
   - 작은 메시지 크기
 - **사용 사례**: IoT 디바이스, 센서 네트워크
 
-### 3. Socket.IO
+#### 3. WAMP (Web Application Messaging Protocol)
+- **특징**: 분산 시스템을 위한 통합 프로토콜
+- **장점**:
+  - RPC(Remote Procedure Call)와 pub/sub 패턴 모두 지원
+  - 다양한 프로그래밍 언어 지원
+  - 확장 가능한 구조
+- **사용 사례**: 분산 시스템, 마이크로서비스 아키텍처
+
+### WebSocket 클라이언트 라이브러리
+
+#### 1. Socket.IO
 - **특징**: WebSocket을 추상화한 JavaScript 라이브러리
 - **장점**:
   - 자동 재연결
@@ -105,14 +117,23 @@ Client <----Data-----> Server
   - 이벤트 기반 통신
 - **사용 사례**: 실시간 게임, 협업 도구
 
-### 4. Raw WebSocket
-- **특징**: 프로토콜 없이 WebSocket API 직접 사용
+#### 2. SockJS
+- **특징**: WebSocket 에뮬레이션 JavaScript 라이브러리
+- **장점**:
+  - WebSocket을 지원하지 않는 환경에서 대체 전송 제공
+  - Spring과 높은 호환성
+  - 자동 폴백 메커니즘
+- **사용 사례**: 엔터프라이즈 웹 애플리케이션
+
+### WebSocket 구현 방식
+
+#### Raw WebSocket
+- **특징**: 브라우저 제공 WebSocket API 직접 사용
 - **장점**:
   - 최소한의 오버헤드
   - 커스텀 프로토콜 구현 가능
   - 가장 빠른 성능
 - **사용 사례**: 저지연이 중요한 실시간 애플리케이션
-
 
 ## STOMP(Simple Text Oriented Messaging Protocol)
 STOMP는 WebSocket 위에서 동작하는 메시징 프로토콜입니다. HTTP와 유사한 형식을 가집니다.
