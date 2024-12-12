@@ -12,7 +12,7 @@ function App() {
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -41,7 +41,7 @@ function App() {
       // 공개 채널 구독
       client.subscribe('/topic/public', (message) => {
         const receivedMessage = JSON.parse(message.body);
-        setMessages(prevMessages => [...prevMessages, receivedMessage]);
+        setMessages((prevMessages) => [...prevMessages, receivedMessage]);
       });
 
       // 입장 메시지 전송
@@ -49,8 +49,8 @@ function App() {
         destination: '/app/chat.addUser',
         body: JSON.stringify({
           sender: username,
-          type: 'JOIN'
-        })
+          type: 'JOIN',
+        }),
       });
     };
 
@@ -64,6 +64,15 @@ function App() {
 
   const disconnect = () => {
     if (clientRef.current) {
+      // 퇴장 메시지 전송
+      clientRef.current.publish({
+        destination: '/app/chat.addUser',
+        body: JSON.stringify({
+          sender: username,
+          type: 'LEAVE'
+        })
+      });
+      
       clientRef.current.deactivate();
     }
   };
@@ -77,22 +86,22 @@ function App() {
       body: JSON.stringify({
         sender: username,
         content: message,
-        type: 'CHAT'
-      })
+        type: 'CHAT',
+      }),
     });
 
     setMessage('');
   };
 
   return (
-    <div className="chat-container">
+    <div className='chat-container'>
       <h1>WebSocket 채팅방</h1>
-      
+
       {!connected ? (
-        <div className="join-container">
+        <div className='join-container'>
           <input
-            type="text"
-            placeholder="이름을 입력하세요"
+            type='text'
+            placeholder='이름을 입력하세요'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && connect()}
@@ -100,8 +109,8 @@ function App() {
           <button onClick={connect}>참여하기</button>
         </div>
       ) : (
-        <div className="chat-box">
-          <div className="messages">
+        <div className='chat-box'>
+          <div className='messages'>
             {messages.map((msg, index) => (
               <div key={index} className={`message ${msg.type.toLowerCase()}`}>
                 {msg.type === 'JOIN' ? (
@@ -115,14 +124,15 @@ function App() {
             ))}
             <div ref={messagesEndRef} />
           </div>
-          <form onSubmit={sendMessage} className="message-form">
+          <form onSubmit={sendMessage} className='message-form'>
             <input
-              type="text"
-              placeholder="메시지를 입력하세요"
+              type='text'
+              placeholder='메시지를 입력하세요'
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
-            <button type="submit">전송</button>
+            <button type='submit'>전송</button>
+            <button type='button' onClick={disconnect}>나가기</button>
           </form>
         </div>
       )}
@@ -130,4 +140,4 @@ function App() {
   );
 }
 
-export default App; 
+export default App;
