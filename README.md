@@ -71,7 +71,7 @@ sequenceDiagram
     
     Client->>Server: HTTP Request (EventSource 연결)
     activate Server
-    rect rgb(200, 220, 250)
+    rect rgb(100, 100, 100)
         Note over Client,Server: 단방향 스트리밍 채널 수립
         Server->>Client: Event Data
         Server->>Client: Event Data
@@ -133,7 +133,7 @@ sequenceDiagram
     Client->>Server: WebSocket Handshake
     Server->>Client: Handshake Response
     
-    rect rgb(200, 220, 250)
+    rect rgb(100, 100, 100)
         Note over Client,Server: 양방향 통신 채널 수립
         Client->>Server: Data
         Server->>Client: Data
